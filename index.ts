@@ -32,6 +32,24 @@ app.post("/bag/add", function(req, res){
     retrieve();
 })
 
+app.delete("/bag/delete/:id", function(req, res){
+    async function retrieve(){
+        let response = await bagRepository.deleteBag(req.params.id);
+        res.send(response);
+    }
+    retrieve();
+});
+
+
+app.post('/bag/update/:id', function(req, res){
+    async function retrieve(){
+        let json = req.body;
+        let response = await bagRepository.updateBag( req.params.id ,json.name, json.price, json.man, json.woman, json.company, json.type)
+        res.send(response);
+    }
+    retrieve();
+})
+
 
 app.listen(8000,()=>{
     console.log('serveur sur le port 8000')
