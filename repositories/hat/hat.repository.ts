@@ -7,7 +7,6 @@ import { Hat } from "../../interface/hat";
 interface IHatRepository{
     retrieveAll():Promise<Hat[]>
     retrieveByID(id:string): Promise<Hat[]>
-    retrieveByCompany(id: string): Promise<Hat[]>;
     addHat(name: string, price: number, man: string, woman: string, company: number, type: number ):Promise <Hat[]>
     updateHat(id: string, name: string, price: number, man: string, woman: string, company: number, type: number ):Promise <Hat[]>
     deleteHat(id: string): Promise<Hat[]>
@@ -34,15 +33,7 @@ class HatRepository implements IHatRepository{
         })
     };
 
-    retrieveByCompany(id: string): Promise<Hat[]> {
-        return new Promise((resolve , reject)=>{
-            let query: string = `SELECT * FROM hats WHERE hats.company = ${id}`;
-            connection.query<Hat[]>(query, (err,res)=>{
-                if(err) reject (err);
-                else resolve(res);
-            })
-        })
-    };
+  
 
     addHat(name: string, price: number, man: string, woman: string, company: number, type: number ): Promise<Hat[]> {
         return new Promise((resolve, reject)=>{

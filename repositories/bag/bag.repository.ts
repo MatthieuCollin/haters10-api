@@ -6,7 +6,6 @@ import { Bag } from "../../interface/bag";
 interface IBagRepository{
     retrieveAll():Promise<Bag[]>
     retrieveByID(id:string): Promise<Bag[]>
-    retrieveByCompany(id: string): Promise<Bag[]>;
     addBag(name: string, price: number, man: string, woman: string, company: number, type: number ):Promise <Bag[]>
     updateBag(id: string, name: string, price: number, man: string, woman: string, company: number, type: number ):Promise <Bag[]>
     deleteBag(id: string): Promise<Bag[]>
@@ -33,15 +32,7 @@ class BagRepository implements IBagRepository{
         })
     };
 
-    retrieveByCompany(id: string): Promise<Bag[]> {
-        return new Promise((resolve , reject)=>{
-            let query: string = `SELECT * FROM bags WHERE bags.company = ${id}`;
-            connection.query<Bag[]>(query, (err,res)=>{
-                if(err) reject (err);
-                else resolve(res);
-            })
-        })
-    };
+    
 
     addBag(name: string, price: number, man: string, woman: string, company: number, type: number ): Promise<Bag[]> {
         return new Promise((resolve, reject)=>{
