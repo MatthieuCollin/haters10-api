@@ -1,6 +1,7 @@
 import express,{ Express } from "express";
 import mysql from "mysql2";
 import bagRepository from './repositories/bag/bag.repository'
+import hatRepository from "./repositories/hat/hat.repository";
 
 const app: Express = express();
 
@@ -13,6 +14,9 @@ export const connection = mysql.createConnection({
     database: 'haters'
 })
 
+
+
+// ROUTE SAC
 
 app.get("/bags", function (req, res){
     async function retrieve(){
@@ -45,6 +49,45 @@ app.post('/bag/update/:id', function(req, res){
     async function retrieve(){
         let json = req.body;
         let response = await bagRepository.updateBag( req.params.id ,json.name, json.price, json.man, json.woman, json.company, json.type)
+        res.send(response);
+    }
+    retrieve();
+})
+
+
+// ROUTE CHAPEAU
+
+app.get("/hats", function (req, res){
+    async function retrieve(){
+        let response = await hatRepository.retrieveAll();
+        res.send(response)
+    }
+    retrieve();
+})
+
+app.post("/hat/add", function(req, res){
+    async function retrieve(){
+        let json = req.body;
+        let response = await hatRepository.addHat(json.name, json.price, json.man, json.woman, json.company, json.type)
+        res.send(response);
+        
+    }
+    retrieve();
+})
+
+app.delete("/hat/delete/:id", function(req, res){
+    async function retrieve(){
+        let response = await hatRepository.deleteHat(req.params.id);
+        res.send(response);
+    }
+    retrieve();
+});
+
+
+app.post('/hat/update/:id', function(req, res){
+    async function retrieve(){
+        let json = req.body;
+        let response = await hatRepository.updateHat( req.params.id ,json.name, json.price, json.man, json.woman, json.company, json.type)
         res.send(response);
     }
     retrieve();
